@@ -1,4 +1,3 @@
-"""Support for IHC sensors."""
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import DEVICE_CLASS_BATTERY
 
