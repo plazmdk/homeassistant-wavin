@@ -1,0 +1,11 @@
+{
+    "domain": "wavin",
+    "name": "wavin ahc9000",
+    "version": "1.0.0",
+    "documentation": "https://github.com/plazmdk/homeassistant-wavin",
+    "requirements": [],
+    "dependencies": [],
+    "codeowners": [
+        "@plazmdk"
+    ]
+}
