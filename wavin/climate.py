@@ -5,7 +5,7 @@ import logging
 
 from . import DOMAIN
 
-from homeassistant.components.climate import ClimateDevice
+from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
     HVAC_MODE_HEAT, SUPPORT_TARGET_TEMPERATURE, CURRENT_HVAC_HEAT,
     CURRENT_HVAC_IDLE)
@@ -35,7 +35,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
     add_entities([WavinThermostat(wavin_contorller, controller_id, name, room_channel, sensor_channel)])
 
-class WavinThermostat(ClimateDevice):
+class WavinThermostat(ClimateEntity):
     """Representation of a Wavin Thermostaat device."""
 
     def __init__(self, wavin_controller: WavinControl, controller_id, name, room_channel, sensor_channel):
