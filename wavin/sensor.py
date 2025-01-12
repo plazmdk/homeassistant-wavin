@@ -1,5 +1,5 @@
 from homeassistant.helpers.entity import Entity
-from homeassistant.const import DEVICE_CLASS_BATTERY
+from homeassistant.components.sensor.const import SensorDeviceClass
 
 from . import DOMAIN
 from .wavin_ahc9000 import WavinControl
@@ -10,7 +10,6 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     name = discovery_info['name']
     sensor_channel = discovery_info['sensor_channel']
     wavin_contorller = hass.data[DOMAIN][controller_id]
-
     add_entities([WavinSensor(wavin_contorller, controller_id, name, sensor_channel)])
 
 
@@ -27,7 +26,7 @@ class WavinSensor(Entity):
 
     @property
     def device_class(self):
-        return DEVICE_CLASS_BATTERY
+        return SensorDeviceClass.BATTERY
 
     @property
     def device_info(self):
