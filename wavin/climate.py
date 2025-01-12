@@ -29,7 +29,6 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     room_channel = discovery_info['room_channel']
     sensor_channel = discovery_info['sensor_channel']
     wavin_contorller = hass.data[DOMAIN][controller_id]
-
     add_entities([WavinThermostat(wavin_contorller, controller_id, name, room_channel, sensor_channel)])
 
 class WavinThermostat(ClimateEntity):
@@ -41,9 +40,7 @@ class WavinThermostat(ClimateEntity):
         self._sensor = wavin_controller.sensor(sensor_channel)
         self._sensor_channel = sensor_channel
         self._room = wavin_controller.room(room_channel)
-
         self._name = name
-
         self.update()
 
     @property
@@ -105,13 +102,13 @@ class WavinThermostat(ClimateEntity):
     @property
     def hvac_modes(self):
         """HVAC modes."""
-        return [HVACMode.OFF, HVACMode.HEAT]
+        return [HVACMode.HEAT]
 
     @property
     def hvac_action(self):
         """Return the current running hvac operation."""
         if self._target_temperature < self._current_temperature:
-            return HVACAction.OFF
+            return HVACAction.IDLE
         return HVACAction.HEATING
 
     @property

@@ -10,7 +10,6 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     name = discovery_info['name']
     sensor_channel = discovery_info['sensor_channel']
     wavin_contorller = hass.data[DOMAIN][controller_id]
-
     add_entities([WavinSensor(wavin_contorller, controller_id, name, sensor_channel)])
 
 
