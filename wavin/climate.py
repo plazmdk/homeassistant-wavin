@@ -5,16 +5,12 @@ import logging
 
 from . import DOMAIN
 
-from homeassistant.components.climate import ClimateEntity
-from homeassistant.components.climate.const import (
-    HVAC_MODE_HEAT, SUPPORT_TARGET_TEMPERATURE, CURRENT_HVAC_HEAT,
-    CURRENT_HVAC_IDLE)
-from homeassistant.const import (
-    ATTR_TEMPERATURE, TEMP_CELSIUS)
-
+from homeassistant.components.climate import (ClimateEntity, ClimateEntityFeature)
+from homeassistant.components.climate.const import ( HVACMode, HVACAction)
+from homeassistant.const import (ATTR_TEMPERATURE, UnitOfTemperature)
 from .wavin_ahc9000 import WavinControl
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +20,8 @@ DEFAULT_TEMPERATURE = 22
 MIN_TEMP = 10
 MAX_TEMP = 35
 
-SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE
+SUPPORT_FLAGS = ClimateEntityFeature.TARGET_TEMPERATURE
+
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     controller_id = discovery_info['controller_id']
@@ -88,7 +85,7 @@ class WavinThermostat(ClimateEntity):
     @property
     def temperature_unit(self):
         """Return the unit of measurement."""
-        return TEMP_CELSIUS
+        return UnitOfTemperature.CELSIUS
 
     @property
     def current_temperature(self):
@@ -103,19 +100,19 @@ class WavinThermostat(ClimateEntity):
     @property
     def hvac_mode(self):
         """Return hvac operation ie. heat, cool mode."""
-        return HVAC_MODE_HEAT
+        return HVACMode.HEAT
 
     @property
     def hvac_modes(self):
         """HVAC modes."""
-        return [HVAC_MODE_HEAT]
+        return [HVACMode.OFF, HVACMode.HEAT]
 
     @property
     def hvac_action(self):
         """Return the current running hvac operation."""
         if self._target_temperature < self._current_temperature:
-            return CURRENT_HVAC_IDLE
-        return CURRENT_HVAC_HEAT
+            return HVACAction.OFF
+        return HVACAction.HEATING
 
     @property
     def supported_features(self):
